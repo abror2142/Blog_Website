@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Maqolalar</title>
+</head>
+<body>
+<h1>Maqolalar ro'yxati</h1>
+{% for category in categories %}
+<a href="#">{{category}}</a>
+{% endfor %}
+
+{% for post in posts %}
+<h2>{{ post.title }}</h2>
+<p>{{ post.content }}</p>
+<hr>
+{% endfor %}
+</body>
+</html>

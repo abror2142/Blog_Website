@@ -3,7 +3,7 @@ from django.db import models
 
 # Create your models here.
 class Category(models.Model):
-    title = models.CharField(max_length=50, verbose_name='Kategoriya')
+    title = models.CharField(max_length=50, verbose_name='Kategoriya', unique=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Yuklangan vaqti")
 
     def __str__(self):
@@ -17,7 +17,7 @@ class Category(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=255, verbose_name='Sarlavha')
-    content = models.TextField(verbose_name='Maqola matni')
+    content = models.TextField(verbose_name='Maqola matni', blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, verbose_name='Yuklangan vaqti')
     updated = models.DateTimeField(auto_now=True, verbose_name='Yangilangan vaqti')
     published = models.BooleanField(default=True, verbose_name='Saytga chiqarilgan vaqti')
