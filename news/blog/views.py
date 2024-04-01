@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from .models import Category, Post
 from django.shortcuts import render, redirect
-from .forms import PostForm
+from .forms import PostForm, CategoryForm
 
 
 def all_posts(request):
@@ -41,7 +41,7 @@ def post_create(request):
     context = {
         'form': form
     }
-    return render(request, 'blog/post_form.html', context=context)
+    return render(request, 'blog/general_form.html', context=context)
 
 
 def post_update(request, pk):
@@ -50,7 +50,7 @@ def post_update(request, pk):
     if form.is_valid():
         form.save()
         return redirect('index')
-    return render(request, 'blog/post_form.html', {'form': form})
+    return render(request, 'blog/general_form.html', {'form': form})
 
 
 def post_delete(request, pk):
@@ -59,3 +59,40 @@ def post_delete(request, pk):
         post.delete()
         return redirect('index')
     return render(request, 'blog/post_delete.html', {"post": post})
+
+
+def category_detail(request, pk):
+    category = Category.objects.get(pk=pk)
+    context = {
+        'category': category
+    }
+    return render(request, 'blog/category_detail.html', context=context)
+
+
+def category_create(request):
+    form = CategoryForm(data=request.POST)
+    if form.is_valid():
+        form.save()
+        return redirect('index')
+    form = CategoryForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'blog/general_form.html', context=context)
+
+
+def category_update(request, pk):
+    category = Category.objects.get(pk=pk)
+    form = CategoryForm(data=request.POST or None, instance=category)
+    if form.is_valid():
+        form.save()
+        return redirect('index')
+    return render(request, 'blog/general_form.html', {'form': form})
+
+
+def category_delete(request, pk):
+    category = Category.objects.get(pk=pk)
+    if request.method == 'POST':
+        category.delete()
+        return redirect('index')
+    return render(request, 'blog/category_delete.html', {"category": category})
