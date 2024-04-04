@@ -5,6 +5,7 @@ from django.db import models
 class Category(models.Model):
     title = models.CharField(max_length=50, verbose_name='Kategoriya', unique=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Yuklangan vaqti")
+    description = models.CharField(max_length=255)
 
     def __str__(self):
         return self.title
